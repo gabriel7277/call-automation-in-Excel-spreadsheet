@@ -7,7 +7,6 @@ st.set_page_config(page_title="Dashboard de Atendimentos", layout="wide")
 # Upload do arquivo
 uploaded_file = st.file_uploader("📂 Envie seu arquivo Excel (.xls ou .xlsx)", type=["xls", "xlsx"])
 
-
 if uploaded_file is not None:
     # Leitura robusta (tenta openpyxl -> depois xlrd)
     try:
@@ -72,7 +71,7 @@ if uploaded_file is not None:
 
     media_espera_min = df_closed["tempo_espera_cliente_min"].mean(skipna=True)
     col5.metric(
-        "⌛ Tempo Médio de Espera de tudo(Criação → 1º Atendimento)",
+        "⌛ Tempo Médio de Espera(Criação → 1º Atendimento)",
         f"{format_time_minutes(media_espera_min)} ({media_espera_min/60:.1f}h)"
     )
 
