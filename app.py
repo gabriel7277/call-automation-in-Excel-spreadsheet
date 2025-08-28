@@ -25,6 +25,28 @@ if uploaded_file is not None:
 
     # 3) Apenas fechados
     df_closed = df[df.get("closed", 0) == 1].copy()
+
+    # ============================
+    # 🔹 Filtro de datas
+    if "created_at" in df_closed.columns:
+        min_date = df_closed["created_at"].min().date()
+        max_date = df_closed["created_at"].max().date()
+
+        st.sidebar.header("📅 Filtros")
+        start_date, end_date = st.sidebar.date_input(
+            "Selecione o período (Criação):",
+            value=[min_date, max_date],
+            min_value=min_date,
+            max_value=max_date
+        )
+
+        # Aplica filtro
+        if start_date and end_date:
+            mask = (df_closed["created_at"].dt.date >= start_date) & (df_closed["created_at"].dt.date <= end_date)
+            df_closed = df_closed.loc[mask]
+
+    # ============================
+
     # 4) Cálculo de tempos (em minutos)
     m_total = df_closed["created_at"].notna() & df_closed["closed_at"].notna()
     m_espera = df_closed["created_at"].notna() & df_closed["attended_at"].notna()
