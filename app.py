@@ -27,7 +27,7 @@ if uploaded_file is not None:
     df_closed = df[df.get("closed", 0) == 1].copy()
 
     # ============================
-    # 🔹 Filtro de datas
+    #  Filtro de datas
     if "created_at" in df_closed.columns:
         min_date = df_closed["created_at"].min().date()
         max_date = df_closed["created_at"].max().date()
@@ -37,7 +37,7 @@ if uploaded_file is not None:
             "Selecione o período (Criação):",
             value=[min_date, max_date],
             min_value=min_date,
-            max_value=max_date
+            max_value=max_date,
         )
 
         # Aplica filtro
@@ -135,7 +135,7 @@ if uploaded_file is not None:
                            y="total",
                            color="agent_login",
                            text="total",
-                           title="🏆 Top 10 Agentes por Chamados Fechados")
+                           title="🏆 Top Agentes por Chamados Fechados")
         fig_agent.update_traces(textposition="outside")
         st.plotly_chart(fig_agent, use_container_width=True)
 
